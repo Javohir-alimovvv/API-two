@@ -26,9 +26,10 @@ function createProduct(data) {
     }
     data.products.forEach((product) => {
         const card = document.createElement("div")
+        card.dataset.id = product.id
         card.className = "card"
         card.innerHTML = `
-         <img src=${product.images[0]} alt="">
+         <img data-id=${product.id} src=${product.images[0]} class="img__item" alt="">
          <div>
            <h3>${product.title}</h3>
            <div>
@@ -40,6 +41,13 @@ function createProduct(data) {
         wrapper.appendChild(card)
     });
 }
+
+wrapper.addEventListener("click", (e) => {
+    if(e.target.className === "img__item"){
+        let id = e.target.closest(".card").dataset.id
+        open(`/pages/product.html?id=${id}`, "_self")
+    }
+})
 
 btn.addEventListener("click", () => {
     offset++
